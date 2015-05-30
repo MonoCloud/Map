@@ -2,34 +2,110 @@ package com.example.android.websitetest;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.app.Activity;
+import android.content.SharedPreferences;
+
+import android.content.SharedPreferences.Editor;
+
+import android.os.Bundle;
+
+import android.preference.PreferenceManager;
+
+import android.view.View;
+
+import android.view.View.OnClickListener;
+
+import android.widget.Button;
+
+import android.widget.CheckBox;
+
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
 
-public class Seite2 extends ActionBarActivity {
+
+public class Seite2 extends ActionBarActivity implements CompoundButton.OnCheckedChangeListener {
+
+    CheckBox cb1,cb2;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seite2);
+
+        cb1 = (CheckBox)findViewById(R.id.checkBox);
+        cb1.setChecked(getFromSP("cb1"));
+        cb2 = (CheckBox)findViewById(R.id.checkBox2);
+        cb2.setChecked(getFromSP("cb2"));
+    }
+
+    private boolean getFromSP(String key){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("WebsiteTest", android.content.Context.MODE_PRIVATE);
+        return preferences.getBoolean(key, false);
+    }
+    private void saveInSp(String key,boolean value){
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("WebsiteTest", android.content.Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView,
+                                 boolean isChecked) {
+        switch(buttonView.getId()){
+            case R.id.checkBox:
+                saveInSp("cb1",isChecked);
+                break;
+            case R.id.checkBox2:
+                saveInSp("cb2",isChecked);
+                break;
+
+        }}
+
+@Override
+public void onResume(){
+    super.onResume();
+    cb1 = (CheckBox)findViewById(R.id.checkBox);
+    cb1.setChecked(getFromSP("cb1"));
+    cb2 = (CheckBox)findViewById(R.id.checkBox2);
+    cb2.setChecked(getFromSP("cb2"));
+}
+
+    public void onCheckboxClicked(View view){
+        super.onPause();
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.checkBox:
+                if(checked) saveInSp("cb1",true);
+                else saveInSp("cb1",false);
+                break;
+            case R.id.checkBox2:
+                if(checked) saveInSp("cb2",true);
+                    else  saveInSp("cb2",false);
+                break;
+
+        }
     }
 
 
-    public void ablaufplan(View view){
-        String url = "https://www.ief.uni-rostock.de/fileadmin/user_upload/stud_form/Allgemein/Studienablaufplaene/IN_BSc_2012_-_Studienablauf_mit_Nebenfach_zwei_Semester_DE.jpg"; // You could have this at the top of the class as a constant, or pass it in as a method variable, if you wish to send to multiple websites
-        Intent i = new Intent(Intent.ACTION_VIEW); // Create a new intent - stating you want to 'view something'
-        i.setData(Uri.parse(url));  // Add the url data (allowing android to realise you want to open the browser)
-        startActivity(i); // Go go go!
-    }
+    //public void ablaufplan(View view){
+   //  saveInSp("cb1",true);
+   // }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_seite2, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -45,4 +121,6 @@ public class Seite2 extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

@@ -21,13 +21,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onClick(View view){
-       Intent i = new Intent(this,Maps.class);
+        Intent i = new Intent(this,Maps.class);
         startActivity(i);
 
     }
 
 
     public void onClick3(View view){
+
+
         Intent i = new Intent(this,Seite2.class);
         startActivity(i);
 
