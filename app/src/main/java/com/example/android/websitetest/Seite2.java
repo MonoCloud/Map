@@ -1,39 +1,25 @@
 package com.example.android.websitetest;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.ParcelFileDescriptor;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.app.Activity;
+
 import android.content.SharedPreferences;
 
-import android.content.SharedPreferences.Editor;
 
-import android.os.Bundle;
-
-import android.preference.PreferenceManager;
-
-import android.view.View;
-
-import android.view.View.OnClickListener;
-
-import android.widget.Button;
 
 import android.widget.CheckBox;
 
-import android.widget.CompoundButton;
-import android.widget.EditText;
 
 
 
-public class Seite2 extends ActionBarActivity implements CompoundButton.OnCheckedChangeListener {
+
+public class Seite2 extends ActionBarActivity  {
 
     CheckBox cb1,cb2;
-    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +42,8 @@ public class Seite2 extends ActionBarActivity implements CompoundButton.OnChecke
         editor.putBoolean(key, value);
         editor.apply();
     }
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView,
-                                 boolean isChecked) {
-        switch(buttonView.getId()){
-            case R.id.checkBox:
-                saveInSp("cb1",isChecked);
-                break;
-            case R.id.checkBox2:
-                saveInSp("cb2",isChecked);
-                break;
 
-        }}
-
-@Override
-public void onResume(){
-    super.onResume();
-    cb1 = (CheckBox)findViewById(R.id.checkBox);
-    cb1.setChecked(getFromSP("cb1"));
-    cb2 = (CheckBox)findViewById(R.id.checkBox2);
-    cb2.setChecked(getFromSP("cb2"));
-}
-
+   
     public void onCheckboxClicked(View view){
         super.onPause();
         boolean checked = ((CheckBox) view).isChecked();
@@ -96,9 +62,7 @@ public void onResume(){
     }
 
 
-    //public void ablaufplan(View view){
-   //  saveInSp("cb1",true);
-   // }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
